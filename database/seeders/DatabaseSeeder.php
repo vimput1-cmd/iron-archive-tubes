@@ -2,24 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Nation;
+use App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Nation::create(['name' => 'Nazi Germany']);
+        Nation::create(['name' => 'Soviet Union (USSR)']);
+        Nation::create(['name' => 'United States (USA)']);
+        Nation::create(['name' => 'Empire of Japan']);
+        
+        Category::create(['name' => 'Heavy Tank']);
+        Category::create(['name' => 'Medium Tank']);
+        Category::create(['name' => 'Fighter Aircraft']);
+        Category::create(['name' => 'Bomber']);
     }
 }
