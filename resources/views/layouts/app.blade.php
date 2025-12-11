@@ -12,10 +12,12 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand fw-bold" href="{{ url('/') }}">
                     🪖 {{ config('app.name', 'Iron Archive') }}
@@ -28,8 +30,8 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link fw-bold text-primary" href="{{ route('vehicles.index') }}">
-                                    Database Kendaraan
+                                <a class="nav-link fw-bold" href="{{ route('vehicles.index') }}">
+                                    DATABASE KENDARAAN
                                 </a>
                             </li>
                         @endauth

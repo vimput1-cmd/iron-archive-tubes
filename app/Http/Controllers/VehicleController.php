@@ -15,11 +15,43 @@ class VehicleController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    // --- BAGIAN INI YANG SUDAH DIUPDATE LENGKAP (Search + Tahun + Kategori + Negara) ---
+    public function index(Request $request)
     {
-        $vehicles = Vehicle::with(['nation', 'category'])->get();
-        return view('vehicles.index', compact('vehicles'));
+        // 1. Mulai Query (Pakai 'with' biar relasi Negara & Kategori tetap kebawa)
+        $query = Vehicle::with(['nation', 'category']);
+
+        // A. Logika Search (Cari Nama Tank)
+        if ($request->filled('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        // B. 🔥 UPDATE BARU: Logika Filter NEGARA 🔥
+        if ($request->filled('nation')) {
+            $query->where('nation_id', $request->nation);
+        }
+
+        // C. Logika Filter Kategori (Jenis Unit)
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // D. Logika Filter Tahun (Sesuai kolom 'production_year')
+        if ($request->filled('year')) {
+            $query->where('production_year', $request->year);
+        }
+
+        // 2. Ambil data & Urutkan dari tahun terlama
+        $vehicles = $query->orderBy('production_year', 'asc')->get();
+
+        // 3. Ambil Data Pendukung buat Dropdown Filter
+        $categories = Category::all();
+        $nations = Nation::all(); // 🔥 KITA BUTUH INI SEKARANG
+
+        // Kirim semua variabel ($vehicles, $categories, $nations) ke view
+        return view('vehicles.index', compact('vehicles', 'categories', 'nations'));
     }
+    // ------------------------------------------------
 
     public function create()
     {

@@ -1,0 +1,85 @@
+/* --- IRON ARCHIVE: WW2 MILITARY THEME --- */
+
+/* 1. BACKGROUND UTAMA (Warna Kertas Tua / Peta Lama) */
+body {
+    background-color: #E6E1D3 !important; 
+    color: #2b2b2b; /* Teks warna hitam pudar */
+    font-family: 'Courier New', Courier, monospace; /* Font ala mesin ketik dokumen rahasia */
+}
+
+/* 2. NAVBAR (Bagian Atas - Warna Baja Gelap) */
+.navbar {
+    background-color: #2C2C2C !important;
+    border-bottom: 4px solid #8B0000; /* Garis merah aksen di bawah navbar */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+}
+
+.navbar-brand {
+    color: #E6E1D3 !important; /* Tulisan logo warna krem */
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    color: #E6E1D3 !important;
+}
+
+.nav-link:hover {
+    color: #8B0000 !important; /* Pas disentuh jadi merah */
+}
+
+/* 3. KARTU TANK (Card) */
+.card {
+    background-color: #F4F1EA; /* Warna kertas lebih terang */
+    border: 2px solid #4B5320; /* Garis pinggir Hijau Army */
+    border-radius: 0px; /* Sudut kotak tegas (tidak tumpul) ala militer */
+    box-shadow: 6px 6px 0px #4B5320; /* Bayangan kasar warna hijau */
+}
+
+.card-title {
+    color: #4B5320;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* 4. TOMBOL-TOMBOL (Buttons) */
+/* Tombol Utama (Hijau Army) */
+.btn-primary, .btn-success {
+    background-color: #4B5320 !important;
+    border: 2px solid #2f3514 !important;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.btn-primary:hover {
+    background-color: #3a4019 !important;
+}
+
+/* Tombol Bahaya/Search (Merah Bata) */
+.btn-danger {
+    background-color: #8B0000 !important;
+    border: 2px solid #5a0000 !important;
+}
+
+/* Tombol Detail/Back (Abu-abu Baja) */
+.btn-dark, .btn-secondary, .btn-outline-dark {
+    background-color: #3F3B2E !important;
+    border-color: #3F3B2E !important;
+    color: #E6E1D3 !important;
+}
+
+/* 5. FORM INPUT (Kotak Pencarian & Login) */
+.form-control, .form-select {
+    background-color: #FDFBF7;
+    border: 2px solid #3F3B2E;
+    border-radius: 0;
+    color: #3F3B2E;
+}
+
+.form-control:focus {
+    background-color: #fff;
+    border-color: #8B0000; /* Pas ngetik garisnya jadi merah */
+    box-shadow: none;
+}
