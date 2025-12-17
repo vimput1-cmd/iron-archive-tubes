@@ -4,65 +4,59 @@
 <div class="container py-5">
     
     <div class="text-center mb-5">
-        <h1 class="fw-bold display-5" style="color: #3F3B2E; font-family: 'Courier New', monospace;">
-            🪖 IRON ARCHIVE
+        {{-- 1. Ikon Helm ditaruh sendiri di atas (Gede) --}}
+        <div style="font-size: 4rem; line-height: 1;">
+            🪖
+        </div>
+        
+        {{-- 2. Judul Utama --}}
+        <h1 class="fw-bold display-5 mt-2 mb-0" style="color: #3F3B2E; font-family: 'Courier New', monospace; letter-spacing: 4px;">
+            IRON ARCHIVE
         </h1>
-        <p class="text-muted">Top Secret Database of WW2 Vehicles</p>
+        
+        {{-- 3. Garis Hiasan Kecil --}}
+        <div style="width: 100px; height: 3px; background-color: #8B0000; margin: 15px auto;"></div>
+
+        {{-- 4. Subtitle --}}
+        <p class="text-muted fst-italic">Top Secret Database of WW2 Vehicles</p>
     </div>
 
     <div class="card mb-5 p-4 shadow-sm" style="background-color: #DAD3C1; border: 2px solid #3F3B2E;">
         <form action="/vehicles" method="GET">
             <div class="row g-2 align-items-end">
-                
                 <div class="col-md-4">
                     <label class="fw-bold mb-1 small" style="color: #3F3B2E;">Cari Nama:</label>
-                    <input type="text" name="search" class="form-control border-2 border-dark form-control-sm" 
-                           placeholder="Misal: Tiger..." 
-                           value="{{ request('search') }}"
-                           style="background-color: #FDFBF7;">
+                    <input type="text" name="search" class="form-control border-2 border-dark form-control-sm" placeholder="Misal: Tiger..." value="{{ request('search') }}" style="background-color: #FDFBF7;">
                 </div>
-
                 <div class="col-md-2">
                     <label class="fw-bold mb-1 small" style="color: #3F3B2E;">Negara:</label>
                     <select name="nation" class="form-select border-2 border-dark form-select-sm" style="background-color: #FDFBF7;">
                         <option value="">Semua Negara</option>
                         @foreach($nations as $nat)
-                            <option value="{{ $nat->id }}" {{ request('nation') == $nat->id ? 'selected' : '' }}>
-                                {{ $nat->name }}
-                            </option>
+                            <option value="{{ $nat->id }}" {{ request('nation') == $nat->id ? 'selected' : '' }}>{{ $nat->name }}</option>
                         @endforeach
                     </select>
                 </div>
-                
                 <div class="col-md-2">
                     <label class="fw-bold mb-1 small" style="color: #3F3B2E;">Tahun:</label>
                     <select name="year" class="form-select border-2 border-dark form-select-sm" style="background-color: #FDFBF7;">
                         <option value="">Semua Era</option>
                         @foreach(range(1939, 1945) as $year)
-                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
-                                {{ $year }}
-                            </option>
+                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                         @endforeach
                     </select>
                 </div>
-
                 <div class="col-md-2">
                     <label class="fw-bold mb-1 small" style="color: #3F3B2E;">Jenis Unit:</label>
                     <select name="category" class="form-select border-2 border-dark form-select-sm" style="background-color: #FDFBF7;">
                         <option value="">Semua Jenis</option>
                         @foreach($categories as $cat)
-                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->name }}
-                            </option>
+                            <option value="{{ $cat->id }}" {{ request('category') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
                     </select>
                 </div>
-                
                 <div class="col-md-2">
-                    <button type="submit" class="btn w-100 fw-bold text-white shadow-sm btn-sm" 
-                            style="background-color: #8B0000; border: 2px solid #3F3B2E;">
-                        SEARCH 🎯
-                    </button>
+                    <button type="submit" class="btn w-100 fw-bold text-white shadow-sm btn-sm" style="background-color: #8B0000; border: 2px solid #3F3B2E;">SEARCH 🎯</button>
                 </div>
             </div>
         </form>
@@ -70,9 +64,13 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="fw-bold" style="color: #4B5320;">Deployments List:</h4>
-        <a href="/vehicles/create" class="btn text-white fw-bold" style="background-color: #4B5320;">
-            + TAMBAH UNIT BARU
-        </a>
+        
+        {{-- 🔥 CUMA ADMIN YANG BISA LIHAT TOMBOL TAMBAH 🔥 --}}
+        @if(Auth::user()->role == 'admin')
+            <a href="/vehicles/create" class="btn text-white fw-bold" style="background-color: #4B5320;">
+                + TAMBAH UNIT BARU
+            </a>
+        @endif
     </div>
 
     <div class="row">
@@ -89,9 +87,7 @@
                 
                 <div class="card-body d-flex flex-column" style="background-color: #F4F1EA;">
                     <div class="d-flex justify-content-between align-items-start mb-2">
-                        <h5 class="card-title fw-bold mb-0" style="font-family: 'Courier New', monospace;">
-                            {{ $vehicle->name }}
-                        </h5>
+                        <h5 class="card-title fw-bold mb-0" style="font-family: 'Courier New', monospace;">{{ $vehicle->name }}</h5>
                         <span class="badge bg-dark">{{ $vehicle->production_year }}</span>
                     </div>
 
@@ -105,17 +101,18 @@
                     </p>
 
                     <div class="d-grid gap-2 mt-3">
-                        <a href="/vehicles/{{ $vehicle->id }}" class="btn btn-outline-dark btn-sm fw-bold">
-                            👁️ LIHAT DATA & 3D
-                        </a>
-                        <div class="btn-group">
-                            <a href="/vehicles/{{ $vehicle->id }}/edit" class="btn btn-warning btn-sm" style="border: 1px solid #333;">EDIT</a>
-                            <form action="/vehicles/{{ $vehicle->id }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin mau menghapus arsip ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm w-100" style="border: 1px solid #333;">HAPUS</button>
-                            </form>
-                        </div>
+                        <a href="/vehicles/{{ $vehicle->id }}" class="btn btn-outline-dark btn-sm fw-bold">👁️ LIHAT DATA & 3D</a>
+                        
+                        {{-- 🔥 CUMA ADMIN YANG BISA EDIT & HAPUS 🔥 --}}
+                        @if(Auth::user()->role == 'admin')
+                            <div class="btn-group">
+                                <a href="/vehicles/{{ $vehicle->id }}/edit" class="btn btn-warning btn-sm" style="border: 1px solid #333;">EDIT</a>
+                                <form action="/vehicles/{{ $vehicle->id }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin mau menghapus arsip ini?');">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm w-100" style="border: 1px solid #333;">HAPUS</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -123,10 +120,8 @@
         @empty
         <div class="col-12 text-center py-5">
             <h3 class="text-muted">Arsip Tidak Ditemukan, Komandan! 🚫</h3>
-            <p>Coba ganti filter pencarian kamu.</p>
         </div>
         @endforelse
     </div>
-
 </div>
 @endsection
