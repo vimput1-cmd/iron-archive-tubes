@@ -40,9 +40,7 @@
                                         ⭐ COMMAND CENTER
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('categories.index') }}">📂 Manage Kategori</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('nations.index') }}">🌍 Manage Negara</a></li>
-                                        <li><hr class="dropdown-divider"></li>
+                                        {{-- Manage Kategori & Negara SUDAH DIHAPUS DI SINI --}}
                                         <li><a class="dropdown-item" href="{{ route('users.index') }}">👮‍♂️ Manage Personel</a></li>
                                     </ul>
                                 </li>
