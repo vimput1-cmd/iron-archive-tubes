@@ -30,7 +30,9 @@ try {
     check('T1 Guest akses /vehicles diarahkan ke /login', str_contains($driver->getCurrentURL(), '/login'));
 
     // ---- T2: Login valid -> authenticated (/home) ----
+    // Reset cookie agar tidak ada "intended URL" sisa T1 (yang membuat redirect ke /vehicles, bukan /home)
     echo "[Info] Memulai T2 (Login valid)...\n";
+    $driver->manage()->deleteAllCookies();
     $driver->get(appUrl('/login'));
     $driver->findElement(WebDriverBy::id('email'))->sendKeys('admin@ironarchive.test');
     $driver->findElement(WebDriverBy::id('password'))->sendKeys('password');
