@@ -16,7 +16,6 @@
 require __DIR__ . '/bootstrap.php';
 
 use Facebook\WebDriver\WebDriverBy;
-use Facebook\WebDriver\WebDriverExpectedCondition;
 
 $driver = makeDriver();
 
@@ -27,7 +26,7 @@ try {
     // ---- T1: Guest -> halaman terproteksi -> redirect /login ----
     echo "[Info] Memulai T1 (Guest akses /vehicles)...\n";
     $driver->get(appUrl('/vehicles'));
-    $driver->wait(10)->until(WebDriverExpectedCondition::urlContains('/login'));
+    waitUrlContains($driver, '/login');
     check('T1 Guest akses /vehicles diarahkan ke /login', str_contains($driver->getCurrentURL(), '/login'));
 
     // ---- T2: Login valid -> authenticated (/home) ----
@@ -36,7 +35,7 @@ try {
     $driver->findElement(WebDriverBy::id('email'))->sendKeys('admin@ironarchive.test');
     $driver->findElement(WebDriverBy::id('password'))->sendKeys('password');
     $driver->findElement(WebDriverBy::cssSelector('button[type="submit"]'))->click();
-    $driver->wait(10)->until(WebDriverExpectedCondition::urlContains('/home'));
+    waitUrlContains($driver, '/home');
     check('T2 Login valid masuk ke /home', str_contains($driver->getCurrentURL(), '/home'));
 
     // Reset ke state Tamu (hapus cookie sesi) sebelum menguji login gagal
@@ -49,11 +48,10 @@ try {
     $driver->findElement(WebDriverBy::id('password'))->sendKeys('password-salah');
     $driver->findElement(WebDriverBy::cssSelector('button[type="submit"]'))->click();
     // Login gagal: Laravel mengembalikan ke halaman /login (field email masih ada)
-    $driver->wait(10)->until(WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::id('email')));
+    waitElementById($driver, 'email');
     $url = $driver->getCurrentURL();
     check('T3 Login salah tetap di /login (bukan /home)', str_contains($url, '/login') && !str_contains($url, '/home'));
 
-    // TODO (Vincent): tambah skenario logout & registrasi valid bila perlu. Sertakan screenshot tiap transisi.
 } catch (\Throwable $e) {
     echo "[ERROR] " . $e->getMessage() . "\n";
     try { $driver->takeScreenshot(__DIR__ . '/Error_Selenium.png'); echo "Screenshot kegagalan disimpan.\n"; } catch (\Throwable $x) {}
